@@ -7,7 +7,7 @@ module DockerTdd
 
         def initialize(name, options= {})
             @name = name
-            @args = options[:args]
+            @args = options[:args] || []
             @container = Docker::Container.create('Image' => name, 'Cmd' => @args)
             @boottime = options[:boottime] || 0
         end
