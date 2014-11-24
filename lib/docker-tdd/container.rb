@@ -8,12 +8,12 @@ module DockerTdd
         def initialize(name, options= {})
             @name = name
             @args = options[:args] || []
-            @container = Docker::Container.create('Image' => name, 'Cmd' => @args)
+            @env = options[:env] || []
+            @container = Docker::Container.create('Image' => name, 'Cmd' => @args, 'Env' => @env)
             @boottime = options[:boottime] || 0
         end
 
         def start
-            puts "docker run #{@name} #{@args.join(' ')}"
             @container.start
         end
 
@@ -28,6 +28,10 @@ module DockerTdd
 
         def address
             @container.json['NetworkSettings']['IPAddress']
+        end
+
+        def json
+            @container.json
         end
     end
 end
