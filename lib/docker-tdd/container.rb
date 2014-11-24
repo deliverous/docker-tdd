@@ -7,11 +7,13 @@ module DockerTdd
 
         def initialize(name, options= {})
             @name = name
-            @container = Docker::Container.create('Image' => name, 'Cmd' => options[:args])
+            @args = options[:args]
+            @container = Docker::Container.create('Image' => name, 'Cmd' => @args)
             @boottime = options[:boottime] || 0
         end
 
         def start
+            puts "docker run #{@name} #{@args.join(' ')}"
             @container.start
         end
 
