@@ -8,6 +8,9 @@ module DockerTdd
                 value.start
             end
             sleep select_value(:boottime).map {|value| value.boottime }.max
+            select_value(:running?).each do |value|
+                raise RuntimeError.new "#{value.name} failed to start" unless value.running?
+            end
         end
 
         def after_teardown

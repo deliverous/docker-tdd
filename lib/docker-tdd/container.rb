@@ -3,6 +3,7 @@ require 'docker'
 module DockerTdd
     class Container
         attr_reader :boottime
+        attr_reader :name
 
         def initialize(name, options= {})
             @name = name
@@ -12,11 +13,16 @@ module DockerTdd
 
         def start
             @container.start
+            puts @container.json
         end
 
         def stop
             @container.kill
             @container.delete(:force => true)
+        end
+
+        def running?
+            @container.json['State']['Running'] == true
         end
 
         def address
