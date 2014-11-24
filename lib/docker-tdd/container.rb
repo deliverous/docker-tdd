@@ -13,7 +13,6 @@ module DockerTdd
 
         def start
             @container.start
-            puts @container.json
         end
 
         def stop
