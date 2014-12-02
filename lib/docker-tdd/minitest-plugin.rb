@@ -10,8 +10,10 @@ module DockerTdd
             end
             sleep select_value(:boottime).map {|value| value.boottime }.max
             select_value(:running?).each do |value|
-                puts JSON.pretty_generate(value.json)
-                raise RuntimeError.new "#{value.name} failed to start" unless value.running?
+                if not value.running? then
+                    puts JSON.pretty_generate(value.json)
+                    raise RuntimeError.new "#{value.name} failed to start"
+                end
             end
         end
 
